@@ -24,12 +24,12 @@ public class Iperfer {
       return;
     }
     
-    if ((Integer.parseInt(args[4]) < 1024 || Integer.parseInt(args[4]) > 65535) && !args[0].equals("-c")) {
+    if (args[0].equals("-c") && (Integer.parseInt(args[4]) < 1024 || Integer.parseInt(args[4]) > 65535)) {
       System.out.println("Error: port number must be in the range 1024 to 65535");
       return;
     }
     
-    if ((Integer.parseInt(args[2]) < 1024 || Integer.parseInt(args[2]) > 65535) && !args[0].equals("-s")) {
+    if (args[0].equals("-s") && (Integer.parseInt(args[2]) < 1024 || Integer.parseInt(args[2]) > 65535)) {
       System.out.println("Error: port number must be in the range 1024 to 65535");
       return;
     }
