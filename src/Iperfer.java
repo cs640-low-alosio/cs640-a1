@@ -56,10 +56,13 @@ public class Iperfer {
         
         System.out.println("bytes size: " + Character.BYTES * buffer.length);
         
-        while (in.read(buffer, 0, BUF_SIZE / Character.BYTES) != -1) {
+//        while (in.read(buffer, 0, BUF_SIZE / Character.BYTES) != -1) {
+        while (in.read(buffer) != -1) {
 //          System.out.print(counter + ", ");
           counter++;
         }
+        counter = counter/1000;
+        
         System.out.println();
         
         System.out.println("received=" + counter + " KB rate=" + (counter * 8)/((System.nanoTime() - startTime) / 1000000) + " Mbps");
