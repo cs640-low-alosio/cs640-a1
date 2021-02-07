@@ -56,7 +56,7 @@ public class Iperfer {
         
         System.out.println("bytes size: " + Character.BYTES * buffer.length);
         
-        while (in.read(buffer, 0, BUF_SIZE) != -1) {
+        while (in.read(buffer, 0, BUF_SIZE / Character.BYTES) != -1) {
 //          System.out.print(counter + ", ");
           counter++;
         }
@@ -99,7 +99,7 @@ public class Iperfer {
         
         while ((System.nanoTime() - startTime) < duration) {
 //          System.out.print(counter + ", ");
-          out.write(bytes, 0, BUF_SIZE);
+          out.write(bytes, 0, BUF_SIZE / Character.BYTES);
           counter++;
         }
         System.out.println();
