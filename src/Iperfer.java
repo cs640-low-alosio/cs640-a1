@@ -54,8 +54,10 @@ public class Iperfer {
         
         serverSocket.setReceiveBufferSize(BUF_SIZE);
         
+        System.out.println("bytes size: " + Character.BYTES * buffer.length);
+        
         while (in.read(buffer, 0, BUF_SIZE / Character.BYTES) != -1) {
-          System.out.print(counter + ", ");
+//          System.out.print(counter + ", ");
           counter++;
         }
         System.out.println();
@@ -96,7 +98,7 @@ public class Iperfer {
         System.out.println("bytes size: " + Character.BYTES * bytes.length);
         
         while ((System.nanoTime() - startTime) < duration) {
-          System.out.print(counter + ", ");
+//          System.out.print(counter + ", ");
           out.write(bytes, 0, BUF_SIZE / Character.BYTES);
           counter++;
         }
