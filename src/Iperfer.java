@@ -52,7 +52,7 @@ public class Iperfer {
         int counter = 0;
         char[] buffer = new char[BUF_SIZE / Character.BYTES];
         
-//        serverSocket.setReceiveBufferSize(BUF_SIZE);
+        serverSocket.setReceiveBufferSize(BUF_SIZE);
         
         System.out.println("bytes size: " + Character.BYTES * buffer.length);
         
@@ -89,7 +89,7 @@ public class Iperfer {
         Arrays.fill(bytes, '0');
         
         //clientSocket.setSoTimeout(secondsToRun*1000);
-//        clientSocket.setSendBufferSize(BUF_SIZE);
+        clientSocket.setSendBufferSize(BUF_SIZE);
         
         long startTime = System.nanoTime();
         long duration = (long) (secondsToRun * Math.pow(10, 9));
