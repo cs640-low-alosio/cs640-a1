@@ -71,6 +71,7 @@ public class Iperfer {
         int counter = 0;
         
         while ((System.nanoTime() - startTime) > duration) {
+          System.out.println("curr durr: " + (System.nanoTime() - startTime) + ", dur: " + duration + ", dur (s): " + secondsToRun);
           out.write(bytes);
           counter++;
         }
