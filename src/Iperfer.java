@@ -60,7 +60,7 @@ public class Iperfer {
         clientSocket = new Socket(serverIp, port);
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         
-        char[] bytes = new char[500];
+        char[] bytes = new char[BUF_SIZE / Character.BYTES];
         Arrays.fill(bytes, '0');
         
         //clientSocket.setSoTimeout(secondsToRun*1000);
@@ -72,8 +72,11 @@ public class Iperfer {
         
         System.out.println("curr durr: " + (System.nanoTime() - startTime) + ", dur: " + duration);
         
+        System.out.println(bytes);
+        System.out.println("bytes size: " + Character.BYTES * BUF_SIZE);
+        
         while ((System.nanoTime() - startTime) < duration) {
-          out.write(bytes);
+          out.print(bytes);
           counter++;
         }
         
