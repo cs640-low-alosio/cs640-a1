@@ -64,7 +64,7 @@ public class Iperfer {
 //          System.out.print(counter + ", ");
           counter++;
         }
-//        counter = counter/(BUF_SIZE / Character.BYTES);
+        counter = counter/(BUF_SIZE / Character.BYTES);
         
         System.out.println();
         
