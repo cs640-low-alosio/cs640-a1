@@ -5,8 +5,12 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Arrays;
+import com.sun.org.apache.bcel.internal.Const;
 
 public class Iperfer {
+  
+  static final int BUF_SIZE = 1000;
 
   public static void main(String[] args) {
     if (args.length != 7 && args.length != 3) {
@@ -57,7 +61,26 @@ public class Iperfer {
         clientSocket = new Socket(serverIp, port);
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         
+        char[] bytes = new char[500];
+        Arrays.fill(bytes, '0');
+        
+        //clientSocket.setSoTimeout(secondsToRun*1000);
+        clientSocket.setSendBufferSize(BUF_SIZE);
+        
+        long startTime = System.nanoTime();
+        long duration = secondsToRun * 10^9;
+        int counter = 0;
+        
+        while ((System.nanoTime() - startTime) > duration) {
+          out.write(bytes);
+          counter++;
+        }
+        
         System.out.println("test clientSocket connected: " + clientSocket.isConnected());
+        
+        System.out.println("sent=" + counter + " KB rate=" + (counter*8)/(secondsToRun*1000) + " Mbps");
+        
+        clientSocket.close();
       } catch (UnknownHostException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
