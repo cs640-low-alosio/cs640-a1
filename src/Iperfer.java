@@ -67,11 +67,12 @@ public class Iperfer {
         clientSocket.setSendBufferSize(BUF_SIZE);
         
         long startTime = System.nanoTime();
-        long duration = secondsToRun * 10^9;
+        long duration = (long) (secondsToRun * Math.pow(10, 9));
         int counter = 0;
         
-        while ((System.nanoTime() - startTime) > duration) {
-          System.out.println("curr durr: " + (System.nanoTime() - startTime) + ", dur: " + duration + ", dur (s): " + secondsToRun);
+        System.out.println("curr durr: " + (System.nanoTime() - startTime) + ", dur: " + duration);
+        
+        while ((System.nanoTime() - startTime) < duration) {
           out.write(bytes);
           counter++;
         }
