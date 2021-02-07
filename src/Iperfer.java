@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Iperfer {
@@ -50,14 +51,16 @@ public class Iperfer {
         
         long startTime = System.nanoTime();
         int counter = 0;
-        char[] buffer = new char[BUF_SIZE / Character.BYTES];
+//        char[] buffer = new char[BUF_SIZE / Character.BYTES];
+//        char buffer;
         
         serverSocket.setReceiveBufferSize(BUF_SIZE);
         
-        System.out.println("bytes size: " + Character.BYTES * buffer.length);
+//        System.out.println("bytes size: " + Character.BYTES * buffer.length);
+//        ArrayList<Character> receivedData = new ArrayList<>();
         
 //        while (in.read(buffer, 0, BUF_SIZE / Character.BYTES) != -1) {
-        while (in.read(buffer) != -1) {
+        while (in.read() != -1) {
 //          System.out.print(counter + ", ");
           counter++;
         }
@@ -102,7 +105,7 @@ public class Iperfer {
         
         while ((System.nanoTime() - startTime) < duration) {
 //          System.out.print(counter + ", ");
-          out.write(bytes, 0, BUF_SIZE / Character.BYTES);
+          out.write(bytes);
           counter++;
         }
         System.out.println();
