@@ -47,14 +47,15 @@ public class Iperfer {
         
         long startTime = System.nanoTime();
         int counter = 0;
+        char[] buffer = new char[500];
         
         serverSocket.setReceiveBufferSize(BUF_SIZE);
         
-        while (in.read() != -1) {
+        while (in.read(buffer, 0, 500) != -1) {
           counter++;
         }
         
-        System.out.println("received=" + counter + " KB rate=" + (counter * 8)/((System.nanoTime() - startTime) * 1000000) + " Mbps");
+        System.out.println("received=" + counter + " KB rate=" + (counter * 8)/((System.nanoTime() - startTime) / 1000000) + " Mbps");
         
         System.out.println("test clientSocket connected: " + clientSocket.isConnected());
         
