@@ -1,7 +1,10 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -59,6 +62,9 @@ public class Iperfer {
         
         System.out.println("test clientSocket connected: " + clientSocket.isConnected());
         
+        clientSocket.close();
+        serverSocket.close();
+        
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -70,7 +76,7 @@ public class Iperfer {
       Socket clientSocket;
       try {
         clientSocket = new Socket(serverIp, port);
-        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()), BUF_SIZE);
         
         char[] bytes = new char[BUF_SIZE / Character.BYTES];
         Arrays.fill(bytes, '0');
@@ -88,7 +94,7 @@ public class Iperfer {
         System.out.println("bytes size: " + Character.BYTES * bytes.length);
         
         while ((System.nanoTime() - startTime) < duration) {
-          out.print(bytes);
+          out.write(bytes, 0, 500);
           counter++;
         }
         
