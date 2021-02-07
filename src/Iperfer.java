@@ -50,7 +50,7 @@ public class Iperfer {
             new InputStreamReader(clientSocket.getInputStream()));
         
         long startTime = System.nanoTime();
-        int counter = 0;
+        int counter = 1;
 //        char[] buffer = new char[BUF_SIZE / Character.BYTES];
 //        char buffer;
         
