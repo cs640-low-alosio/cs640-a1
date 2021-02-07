@@ -50,11 +50,11 @@ public class Iperfer {
         
         long startTime = System.nanoTime();
         int counter = 0;
-        char[] buffer = new char[500];
+        char[] buffer = new char[BUF_SIZE / Character.BYTES];
         
         serverSocket.setReceiveBufferSize(BUF_SIZE);
         
-        while (in.read(buffer, 0, 500) != -1) {
+        while (in.read(buffer, 0, BUF_SIZE / Character.BYTES) != -1) {
           System.out.print(counter + ", ");
           counter++;
         }
@@ -97,7 +97,7 @@ public class Iperfer {
         
         while ((System.nanoTime() - startTime) < duration) {
           System.out.print(counter + ", ");
-          out.write(bytes, 0, 500);
+          out.write(bytes, 0, BUF_SIZE / Character.BYTES);
           counter++;
         }
         System.out.println();
