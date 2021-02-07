@@ -55,6 +55,7 @@ public class Iperfer {
         serverSocket.setReceiveBufferSize(BUF_SIZE);
         
         while (in.read(buffer, 0, 500) != -1) {
+          System.out.println(buffer);
           counter++;
         }
         
