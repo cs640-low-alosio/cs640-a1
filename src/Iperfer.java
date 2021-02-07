@@ -45,6 +45,17 @@ public class Iperfer {
         BufferedReader in = new BufferedReader(
             new InputStreamReader(clientSocket.getInputStream()));
         
+        long startTime = System.nanoTime();
+        int counter = 0;
+        
+        serverSocket.setReceiveBufferSize(BUF_SIZE);
+        
+        while (in.read() != -1) {
+          counter++;
+        }
+        
+        System.out.println("received=" + counter + " KB rate=" + (counter * 8)/((System.nanoTime() - startTime) * 1000000) + " Mbps");
+        
         System.out.println("test clientSocket connected: " + clientSocket.isConnected());
         
       } catch (IOException e) {
@@ -73,7 +84,7 @@ public class Iperfer {
         System.out.println("curr durr: " + (System.nanoTime() - startTime) + ", dur: " + duration);
         
         System.out.println(bytes);
-        System.out.println("bytes size: " + Character.BYTES * BUF_SIZE);
+        System.out.println("bytes size: " + Character.BYTES * bytes.length);
         
         while ((System.nanoTime() - startTime) < duration) {
           out.print(bytes);
@@ -82,7 +93,7 @@ public class Iperfer {
         
         System.out.println("test clientSocket connected: " + clientSocket.isConnected());
         
-        System.out.println("sent=" + counter + " KB rate=" + (counter*8)/(secondsToRun*1000) + " Mbps");
+        System.out.println("sent=" + counter + " KB rate=" + (counter * 8)/(secondsToRun*1000) + " Mbps");
         
         clientSocket.close();
       } catch (UnknownHostException e) {
