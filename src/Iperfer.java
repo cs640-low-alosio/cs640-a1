@@ -42,10 +42,11 @@ public class Iperfer {
 
       try {
         ServerSocket serverSocket = new ServerSocket(port);
-        serverSocket.setReceiveBufferSize(BUF_SIZE);
         Socket clientSocket = serverSocket.accept();
-        BufferedReader in =
-            new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//        serverSocket.setReceiveBufferSize(BUF_SIZE);
+//        BufferedReader in =
+//            new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        InputStreamReader in = new InputStreamReader(clientSocket.getInputStream());
 
         long startTime = System.nanoTime();
         int counter = 0;
@@ -74,9 +75,10 @@ public class Iperfer {
 
       try {
         Socket clientSocket = new Socket(serverIp, port);
-        clientSocket.setSendBufferSize(BUF_SIZE);
-        BufferedWriter out =
-            new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()), BUF_SIZE);
+//        clientSocket.setSendBufferSize(BUF_SIZE);
+//        BufferedWriter out =
+//            new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()), BUF_SIZE);
+        OutputStreamWriter out = new OutputStreamWriter(clientSocket.getOutputStream());
 
         char[] bytes = new char[BUF_SIZE / Character.BYTES];
         Arrays.fill(bytes, '0');
