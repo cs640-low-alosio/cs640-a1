@@ -1,0 +1,3 @@
+h1 ping -c 20 h4 > h1_h4_Q4.txt &
+h5 ping -c 20 h6 > h5_h6_Q4.txt &
+

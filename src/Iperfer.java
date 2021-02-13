@@ -49,17 +49,17 @@ public class Iperfer {
         long totalChar = 0;
 
         char[] readBuffer = new char[BUF_SIZE / Character.BYTES]; // 500 chars (2 bytes) in one KByte
-//        while (in.read() != -1) {
+        // while (in.read() != -1) {
         while ((charReadCount = in.read(readBuffer)) != -1) {
           System.out.println("charReadCount: " + charReadCount); // debug
           totalChar += charReadCount;
         }
         
         long totalKByte = totalChar / (BUF_SIZE / Character.BYTES); // 500 chars (2 bytes) in one KByte
-        totalKByte += 1; // TODO: figure out why server is off by one
+        // totalKByte += 1; // figure out why server is off by one; discussed with Abhinay - one less on server is fine
         totalKByte = totalKByte / 2; // TODO: figure out why off by factor of two
         long totalMbit = totalKByte * BITS_PER_BYTE / 1000;
-        double serverDuration = ((System.nanoTime() - startTime) / 1000000000);
+        long serverDuration = (System.nanoTime() - startTime) / 1000000000;
         double rate = (double) totalMbit / serverDuration;
         
         // debug
@@ -95,10 +95,11 @@ public class Iperfer {
         
         totalKByte = totalKByte / 2; // TODO: figure out why off by factor of two
         long totalMbit = totalKByte * 8 / 1000;
-        double rate = (double) totalMbit / secDuration;
+        long clientDuration = (System.nanoTime() - startTime) / 1000000000;
+        double rate = (double) totalMbit / clientDuration;
         
         // debug
-        System.out.println("client sizeof: " + Character.BYTES * bytes.length + ", totalKByte: " + totalKByte + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", secDur: " + secDuration + ", nsecDur: " + nanosecDuration + ", calculation: " + (long) (secDuration * Math.pow(10, 9)));
+        System.out.println("client sizeof: " + Character.BYTES * bytes.length + ", totalKByte: " + totalKByte + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", clientDuration: " + clientDuration + ", nsecDur: " + nanosecDuration + ", calculation: " + (long) (secDuration * Math.pow(10, 9)));
         // actual output
         System.out.println("sent=" + totalKByte + " KB rate=" + threePlaces.format(rate) + " Mbps");
 
