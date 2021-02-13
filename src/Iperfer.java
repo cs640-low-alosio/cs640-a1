@@ -70,7 +70,7 @@ public class Iperfer {
     } else { // otherwise, assume -c
       int port = Integer.parseInt(args[4]);
       String serverIp = args[2];
-      long secDur = Integer.parseInt(args[6]);
+      int secDur = Integer.parseInt(args[6]);
 
       try {
         Socket clientSocket = new Socket(serverIp, port);
@@ -81,7 +81,7 @@ public class Iperfer {
         char[] bytes = new char[BUF_SIZE / Character.BYTES];
         Arrays.fill(bytes, '0');
         long startTime = System.nanoTime();
-        long nsecDur = secDur * 1000000000;
+        long nsecDur = (long) (secDur * Math.pow(10, 9));
         int counter = 0;
 
         while ((System.nanoTime() - startTime) < nsecDur) {
@@ -91,7 +91,7 @@ public class Iperfer {
 
         double rate = (counter * 8) / (secDur * 1000);
         
-        System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", secDur: " + secDur + ", nsecDur: " + nsecDur);
+        System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", secDur: " + secDur + ", nsecDur: " + nsecDur + ", calculation: " + (long) (secDur * Math.pow(10, 9));
 
         System.out.println("sent=" + counter + " KB rate=" + threePlaces.format(rate) + " Mbps");
 
