@@ -56,6 +56,8 @@ public class Iperfer {
         counter = counter / (BUF_SIZE / Character.BYTES);
 
         double rate = (counter * 8) / ((System.nanoTime() - startTime) / 1000000);
+        
+        System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + rate + ", System.nanoTime: " + System.nanoTime());
 
         System.out
             .println("received=" + counter + " KB rate=" + threePlaces.format(rate) + " Mbps");
@@ -88,6 +90,8 @@ public class Iperfer {
         }
 
         double rate = (counter * 8) / (secDur * 1000);
+        
+        System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + rate + ", System.nanoTime: " + System.nanoTime() + ", secDur: " + secDur);
 
         System.out.println("sent=" + counter + " KB rate=" + threePlaces.format(rate) + " Mbps");
 
