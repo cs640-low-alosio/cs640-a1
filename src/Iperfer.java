@@ -56,7 +56,7 @@ public class Iperfer {
         while (in.read(readBuffer) != -1) {
           counter++;
         }
-        counter = (counter * 1000) / (BUF_SIZE / Character.BYTES);
+//        counter = counter / (BUF_SIZE / Character.BYTES);
 
         double rate = (double) (counter * 8) / (double) ((System.nanoTime() - startTime) / 1000000000);
         
