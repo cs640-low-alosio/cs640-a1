@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class Iperfer {
 
   static final int BUF_SIZE = 1000;
+  static final int BITS_PER_BYTE = 8;
   static DecimalFormat threePlaces = new DecimalFormat("0.000");
 
   public static void main(String[] args) {
@@ -43,31 +44,30 @@ public class Iperfer {
       try {
         ServerSocket serverSocket = new ServerSocket(port);
         Socket clientSocket = serverSocket.accept();
-//        serverSocket.setReceiveBufferSize(BUF_SIZE);
-//        BufferedReader in =
-//            new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         InputStreamReader in = new InputStreamReader(clientSocket.getInputStream());
 
         long startTime = System.nanoTime();
-        int charRead = 0;
-        int charCounter = 0;
+        long charReadCount = 0;
+        long totalChar = 0;
 
         char[] readBuffer = new char[BUF_SIZE / Character.BYTES];
 //        while (in.read() != -1) {
-        while ((charRead = in.read(readBuffer)) != -1) {
-          charCounter += charRead;
+        while ((charReadCount = in.read(readBuffer)) != -1) {
+          totalChar += charReadCount;
         }
-        int kbRead = charCounter / (BUF_SIZE / Character.BYTES);
-        kbRead += 1; // TODO: figure out why server is off by one
-        kbRead = kbRead / 2; // TODO: figure out why off by factor of two
-
-        double rate = (double) (kbRead * 8) / (double) ((System.nanoTime() - startTime) / 1000000);
+        long totalKB = totalChar / (BUF_SIZE / Character.BYTES);
+        totalKB += 1; // TODO: figure out why server is off by one
+        totalKB = totalKB / 2; // TODO: figure out why off by factor of two
         
         
-        System.out.println("kbRead: " + kbRead + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", denom: " + ((System.nanoTime() - startTime) / 1000000));
+        long totalMbit = totalKB * BITS_PER_BYTE / 1000;
+        double serverDuration = ((System.nanoTime() - startTime) / 1000000000);
+        double rate = (double) totalMbit / serverDuration;
+                
+        System.out.println("kbRead: " + totalKB + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", denom: " + ((System.nanoTime() - startTime) / 1000000));
 
         System.out
-            .println("received=" + kbRead + " KB rate=" + threePlaces.format(rate) + " Mbps");
+            .println("received=" + totalKB + " KB rate=" + threePlaces.format(rate) + " Mbps");
 
         clientSocket.close();
         serverSocket.close();
@@ -81,9 +81,6 @@ public class Iperfer {
 
       try {
         Socket clientSocket = new Socket(serverIp, port);
-//        clientSocket.setSendBufferSize(BUF_SIZE);
-//        BufferedWriter out =
-//            new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()), BUF_SIZE);
         OutputStreamWriter out = new OutputStreamWriter(clientSocket.getOutputStream());
 
         char[] bytes = new char[BUF_SIZE / Character.BYTES];
