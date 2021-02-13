@@ -70,7 +70,7 @@ public class Iperfer {
     } else { // otherwise, assume -c
       int port = Integer.parseInt(args[4]);
       String serverIp = args[2];
-      int secDur = Integer.parseInt(args[6]);
+      long secDur = Integer.parseInt(args[6]);
 
       try {
         Socket clientSocket = new Socket(serverIp, port);
