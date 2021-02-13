@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class Iperfer {
 
   static final int BUF_SIZE = 1000;
-  static DecimalFormat threePlaces = new DecimalFormat("#.###");
+  static DecimalFormat threePlaces = new DecimalFormat("0.000");
 
   public static void main(String[] args) {
     // Invalid arguments
@@ -57,7 +57,7 @@ public class Iperfer {
 
         double rate = (counter * 8) / ((System.nanoTime() - startTime) / 1000000);
         
-        System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + rate + ", System.nanoTime: " + System.nanoTime());
+        System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", denom: " + ((System.nanoTime() - startTime) / 1000000));
 
         System.out
             .println("received=" + counter + " KB rate=" + threePlaces.format(rate) + " Mbps");
@@ -91,7 +91,7 @@ public class Iperfer {
 
         double rate = (counter * 8) / (secDur * 1000);
         
-        System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + rate + ", System.nanoTime: " + System.nanoTime() + ", secDur: " + secDur);
+        System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", secDur: " + secDur + ", nsecDur: " + nsecDur);
 
         System.out.println("sent=" + counter + " KB rate=" + threePlaces.format(rate) + " Mbps");
 
