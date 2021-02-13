@@ -51,6 +51,7 @@ public class Iperfer {
         char[] readBuffer = new char[BUF_SIZE / Character.BYTES];
 //        while (in.read() != -1) {
         while ((charReadCount = in.read(readBuffer)) != -1) {
+          System.out.println("charReadCount: " + charReadCount);
           totalChar += charReadCount;
         }
         long totalKByte = totalChar / (BUF_SIZE / Character.BYTES);
