@@ -48,14 +48,14 @@ public class Iperfer {
             new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
         long startTime = System.nanoTime();
-        int counter = 1;
+        int counter = 0;
 
         while (in.read() != -1) {
           counter++;
         }
         counter = counter / (BUF_SIZE / Character.BYTES);
 
-        double rate = (double) (counter * 8) / ((System.nanoTime() - startTime) / 1000000000);
+        double rate = (double) (counter * 8) / (double) ((System.nanoTime() - startTime) / 1000000000);
         
         System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", denom: " + ((System.nanoTime() - startTime) / 1000000));
 
@@ -89,7 +89,7 @@ public class Iperfer {
           counter++;
         }
 
-        double rate = (double) (counter * 8) / (secDur * 1000);
+        double rate = (double) (counter * 8) / (double) (secDur * 1000);
         
         System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", secDur: " + secDur + ", nsecDur: " + nsecDur + ", calculation: " + (long) (secDur * Math.pow(10, 9)));
 
