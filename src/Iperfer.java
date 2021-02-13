@@ -50,7 +50,7 @@ public class Iperfer {
 
         long startTime = System.nanoTime();
         int charRead = 0;
-        int charCounter = 1;
+        int charCounter = 0;
 
         char[] readBuffer = new char[BUF_SIZE / Character.BYTES];
 //        while (in.read() != -1) {
@@ -58,8 +58,9 @@ public class Iperfer {
           charCounter += charRead;
         }
         int kbRead = charCounter / (BUF_SIZE / Character.BYTES);
+        kbRead += 1; // TODO: figure out why server is off by one
 
-        double rate = (double) (kbRead * 8) / (double) ((System.nanoTime() - startTime) / 1000000000);
+        double rate = (double) (kbRead * 8) / (double) ((System.nanoTime() - startTime) / 1000000);
         
         System.out.println("kbRead: " + kbRead + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", denom: " + ((System.nanoTime() - startTime) / 1000000));
 
