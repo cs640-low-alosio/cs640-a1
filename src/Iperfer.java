@@ -59,8 +59,10 @@ public class Iperfer {
         }
         int kbRead = charCounter / (BUF_SIZE / Character.BYTES);
         kbRead += 1; // TODO: figure out why server is off by one
+        kbRead = kbRead / 2; // TODO: figure out why off by factor of two
 
         double rate = (double) (kbRead * 8) / (double) ((System.nanoTime() - startTime) / 1000000);
+        
         
         System.out.println("kbRead: " + kbRead + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", denom: " + ((System.nanoTime() - startTime) / 1000000));
 
@@ -94,6 +96,8 @@ public class Iperfer {
           out.write(bytes);
           counter++;
         }
+        
+        counter = counter / 2; // TODO: figure out why off by factor of two
 
         double rate = (double) (counter * 8) / (double) (secDur * 1000);
         
