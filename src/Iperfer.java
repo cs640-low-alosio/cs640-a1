@@ -50,7 +50,7 @@ public class Iperfer {
 
         long startTime = System.nanoTime();
         int charRead = 0;
-        int charCounter = 0;
+        int charCounter = 1;
 
         char[] readBuffer = new char[BUF_SIZE / Character.BYTES];
 //        while (in.read() != -1) {
