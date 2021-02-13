@@ -93,7 +93,7 @@ public class Iperfer {
 
         double rate = (double) (counter * 8) / (double) (secDur * 1000);
         
-        System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", secDur: " + secDur + ", nsecDur: " + nsecDur + ", calculation: " + (long) (secDur * Math.pow(10, 9)));
+        System.out.println("sizeof: " + Character.BYTES * bytes.length + "counter: " + counter + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", secDur: " + secDur + ", nsecDur: " + nsecDur + ", calculation: " + (long) (secDur * Math.pow(10, 9)));
 
         System.out.println("sent=" + counter + " KB rate=" + threePlaces.format(rate) + " Mbps");
 
