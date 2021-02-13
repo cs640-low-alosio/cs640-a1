@@ -48,16 +48,16 @@ public class Iperfer {
         long charReadCount = 0;
         long totalChar = 0;
 
-        char[] readBuffer = new char[BUF_SIZE / Character.BYTES];
+        char[] readBuffer = new char[BUF_SIZE / Character.BYTES]; // 500 chars (2 bytes) in one KByte
 //        while (in.read() != -1) {
         while ((charReadCount = in.read(readBuffer)) != -1) {
-          System.out.println("charReadCount: " + charReadCount);
+          System.out.println("charReadCount: " + charReadCount); // debug
           totalChar += charReadCount;
         }
-        long totalKByte = totalChar / (BUF_SIZE / Character.BYTES);
+        
+        long totalKByte = totalChar / (BUF_SIZE / Character.BYTES); // 500 chars (2 bytes) in one KByte
         totalKByte += 1; // TODO: figure out why server is off by one
         totalKByte = totalKByte / 2; // TODO: figure out why off by factor of two
-        
         long totalMbit = totalKByte * BITS_PER_BYTE / 1000;
         double serverDuration = ((System.nanoTime() - startTime) / 1000000000);
         double rate = (double) totalMbit / serverDuration;
@@ -82,7 +82,7 @@ public class Iperfer {
         Socket clientSocket = new Socket(serverIp, port);
         OutputStreamWriter out = new OutputStreamWriter(clientSocket.getOutputStream());
 
-        char[] bytes = new char[BUF_SIZE / Character.BYTES];
+        char[] bytes = new char[BUF_SIZE / Character.BYTES]; // 500 chars (2 bytes) in one KByte
         Arrays.fill(bytes, '0');
         long startTime = System.nanoTime();
         long nanosecDuration = (long) (secDuration * Math.pow(10, 9));
