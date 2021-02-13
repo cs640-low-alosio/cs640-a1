@@ -49,12 +49,13 @@ public class Iperfer {
         InputStreamReader in = new InputStreamReader(clientSocket.getInputStream());
 
         long startTime = System.nanoTime();
+        int bytesRead = 0;
         int counter = 0;
 
-//        while (in.read() != -1) {
         char[] readBuffer = new char[BUF_SIZE / Character.BYTES];
-        while (in.read(readBuffer) != -1) {
-          counter++;
+//        while (in.read() != -1) {
+        while ((bytesRead = in.read(readBuffer)) != -1) {
+          counter += bytesRead;
         }
 //        counter = counter / (BUF_SIZE / Character.BYTES);
 
