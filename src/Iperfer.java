@@ -55,7 +55,7 @@ public class Iperfer {
         }
         counter = counter / (BUF_SIZE / Character.BYTES);
 
-        double rate = (counter * 8) / ((System.nanoTime() - startTime) / 1000000);
+        double rate = (double) (counter * 8) / ((System.nanoTime() - startTime) / 1000000000);
         
         System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", denom: " + ((System.nanoTime() - startTime) / 1000000));
 
@@ -89,7 +89,7 @@ public class Iperfer {
           counter++;
         }
 
-        double rate = (counter * 8) / (secDur * 1000);
+        double rate = (double) (counter * 8) / (secDur * 1000);
         
         System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", secDur: " + secDur + ", nsecDur: " + nsecDur + ", calculation: " + (long) (secDur * Math.pow(10, 9)));
 
