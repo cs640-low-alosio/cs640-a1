@@ -6,11 +6,13 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 public class Iperfer {
 
   static final int BUF_SIZE = 1000;
+  static DecimalFormat threePlaces = new DecimalFormat("#.###");
 
   public static void main(String[] args) {
     // Invalid arguments
@@ -44,7 +46,7 @@ public class Iperfer {
         Socket clientSocket = serverSocket.accept();
         BufferedReader in =
             new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        
+
         long startTime = System.nanoTime();
         int counter = 1;
 
@@ -53,8 +55,10 @@ public class Iperfer {
         }
         counter = counter / (BUF_SIZE / Character.BYTES);
 
-        System.out.println("received=" + counter + " KB rate="
-            + (counter * 8) / ((System.nanoTime() - startTime) / 1000000) + " Mbps");
+        double rate = (counter * 8) / ((System.nanoTime() - startTime) / 1000000);
+
+        System.out
+            .println("received=" + counter + " KB rate=" + threePlaces.format(rate) + " Mbps");
 
         clientSocket.close();
         serverSocket.close();
@@ -65,13 +69,13 @@ public class Iperfer {
       int port = Integer.parseInt(args[4]);
       String serverIp = args[2];
       int secDur = Integer.parseInt(args[6]);
-      
+
       try {
         Socket clientSocket = new Socket(serverIp, port);
         clientSocket.setSendBufferSize(BUF_SIZE);
         BufferedWriter out =
             new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()), BUF_SIZE);
-        
+
         char[] bytes = new char[BUF_SIZE / Character.BYTES];
         Arrays.fill(bytes, '0');
         long startTime = System.nanoTime();
@@ -83,8 +87,9 @@ public class Iperfer {
           counter++;
         }
 
-        System.out
-            .println("sent=" + counter + " KB rate=" + (counter * 8) / (secDur * 1000) + " Mbps");
+        double rate = (counter * 8) / (secDur * 1000);
+
+        System.out.println("sent=" + counter + " KB rate=" + threePlaces.format(rate) + " Mbps");
 
         clientSocket.close();
       } catch (UnknownHostException e) {
