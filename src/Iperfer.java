@@ -49,22 +49,22 @@ public class Iperfer {
         InputStreamReader in = new InputStreamReader(clientSocket.getInputStream());
 
         long startTime = System.nanoTime();
-        int bytesRead = 0;
-        int counter = 0;
+        int charRead = 0;
+        int charCounter = 0;
 
         char[] readBuffer = new char[BUF_SIZE / Character.BYTES];
 //        while (in.read() != -1) {
-        while ((bytesRead = in.read(readBuffer)) != -1) {
-          counter += bytesRead;
+        while ((charRead = in.read(readBuffer)) != -1) {
+          charCounter += charRead;
         }
-//        counter = counter / (BUF_SIZE / Character.BYTES);
+        int kbRead = charCounter / (BUF_SIZE / Character.BYTES);
 
-        double rate = (double) (counter * 8) / (double) ((System.nanoTime() - startTime) / 1000000000);
+        double rate = (double) (kbRead * 8) / (double) ((System.nanoTime() - startTime) / 1000000000);
         
-        System.out.println("counter: " + counter + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", denom: " + ((System.nanoTime() - startTime) / 1000000));
+        System.out.println("kbRead: " + kbRead + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", denom: " + ((System.nanoTime() - startTime) / 1000000));
 
         System.out
-            .println("received=" + counter + " KB rate=" + threePlaces.format(rate) + " Mbps");
+            .println("received=" + kbRead + " KB rate=" + threePlaces.format(rate) + " Mbps");
 
         clientSocket.close();
         serverSocket.close();
