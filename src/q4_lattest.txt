@@ -1,0 +1,4 @@
+h1 java Iperfer -s -p 1024 > q4_latency_h1server.txt &
+h5 java Iperfer -s -p 1024 > q4_latency_h5server.txt &
+h4 java Iperfer -c -h 10.0.0.1 -p 1024 -t 20 > q4_latency_h4client.txt &
+h6 java Iperfer -c -h 10.0.0.4 -p 1024 -t 20 > q4_latency_h6client.txt &

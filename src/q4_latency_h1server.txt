@@ -1,0 +1,3 @@
+totalChar: 54705000
+totalKB: 54705
+received=54705 KB rate=19.000 Mbps

@@ -1,0 +1,62 @@
+Q2:
+Expected:
+The latency will be the sum of the latencies of L1, L2, and L3
+plus a bit of propagation delay. Jared thinks the throughput will be an average
+of each throughput L1, L2, and L3. Garrett thinks the throughput will be 
+rate-limited  by the link with the least bandwidth.
+
+Actual: 
+The h1-h4 latency matched the sum of L1, L2, and L3 latency. Can't tell much
+more because ping is not precise enough (only three digits).
+The throughput was the rate-limiting bandwidth, in this case L1.
+
+Q3:
+Expected:
+The total throughput between each pair of hosts will be divided by the number
+of multiplexed hosts. If there are two pairs of hosts connected, then throughput
+will be divided by two. Same for three, etc.
+We predict no change to latency, because latency is independent of the number
+of multiplexed hosts. It's a property of the links and switches.
+
+Actual:
+Latency did not change.
+Throughput was not evenly divided between the host pairs, but it did approximately
+add up to the throughput for one pair of hosts. We observed that the first host pair
+to run got the highest throughput.
+
+Two pairs
+h1-h4
+sent=39264 KB rate=15.706 Mbps
+received=31384 KB rate=9.342 Mbps
+
+h7-h9
+sent=23798 KB rate=9.519 Mbps
+received=23798 KB rate=7.190 Mbps
+
+Three pairs
+h1-h4
+sent=31384 KB rate=12.554 Mbps
+received=31384 KB rate=9.342 Mbps
+
+h7-h9
+sent=20734 KB rate=8.294 Mbps
+received=20734 KB rate=5.890 Mbps
+
+h8-h10
+sent=14639 KB rate=5.856 Mbps
+received=14639 KB rate=4.257 Mbps
+
+Q4:
+Expected:
+We think the latency will be increased because of queuing delay. Compared to the 
+previous question, traffic is being routed to and from different switches. 
+We think the throughput will be affected similarly to Q3. The sum of the throughput
+for the two host pairs will add up to the total throughput you would have with one
+host pair connecting over L2.
+
+
+Actual:
+We saw that the latency was unaffected. Need to attend office hours and see if this
+is being tested correctly.
+We observed the sum of latencies (h1-h4 and h5-h6) was approximately the same as the 
+throughput of one pair of hosts running through L2.

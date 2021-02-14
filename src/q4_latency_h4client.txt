@@ -1,0 +1,2 @@
+client sizeof: 2000, totalKByte: 54705, starttime: 1056857029489014, rate: 20.810, System.nanoTime: 1056878959346615, clientDuration: 21, nsecDur: 20000000000, calculation: 20000000000
+sent=54705 KB rate=20.810 Mbps
