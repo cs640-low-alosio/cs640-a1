@@ -58,5 +58,5 @@ host pair connecting over L2.
 Actual:
 We saw that the latency was unaffected. Need to attend office hours and see if this
 is being tested correctly.
-We observed the sum of latencies (h1-h4 and h5-h6) was approximately the same as the 
-throughput of one pair of hosts running through L2.
+We observed the latency decreased, but the sum added up to more than the L2 
+throughput with one pair of hosts, unlike Q3.
