@@ -1,3 +1,5 @@
+import java.io.DataOutputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -42,25 +44,25 @@ public class Iperfer {
       try {
         ServerSocket serverSocket = new ServerSocket(port);
         Socket clientSocket = serverSocket.accept();
-        InputStreamReader in = new InputStreamReader(clientSocket.getInputStream());
+        DataInputStream in = new DataInputStream(clientSocket.getInputStream());
 
         long startTime = System.nanoTime();
         long charReadCount = 0;
         long totalChar = 0;
 
-        char[] readBuffer = new char[BUF_SIZE / Character.BYTES]; // 500 chars (2 bytes) in one KByte
+        byte[] readBuffer = new byte[BUF_SIZE]; // 500 chars (2 bytes) in one KByte
         // while (in.read() != -1) {
-        while ((charReadCount = in.read(readBuffer, 0, BUF_SIZE / Character.BYTES)) != -1) {
+        while ((charReadCount = in.read(readBuffer, 0, BUF_SIZE)) != -1) {
           System.out.println("charReadCount: " + charReadCount); // debug
           totalChar += charReadCount;
         }
         
         System.out.println("totalChar: " + totalChar);
         
-        long totalKByte = totalChar / (BUF_SIZE / Character.BYTES); // 500 chars (2 bytes) in one KByte
+        long totalKByte = totalChar / BUF_SIZE; // 500 chars (2 bytes) in one KByte
         System.out.println("totalKB: " + totalKByte);
         // totalKByte += 1; // figure out why server is off by one; discussed with Abhinay - one less on server is fine
-        totalKByte = totalKByte / 2; // TODO: figure out why off by factor of two
+        // totalKByte = totalKByte / 2; // TODO: figure out why off by factor of two
         long totalMbit = totalKByte * BITS_PER_BYTE / 1000;
         long serverDuration = (System.nanoTime() - startTime) / 1000000000;
         double rate = (double) totalMbit / serverDuration;
@@ -83,20 +85,20 @@ public class Iperfer {
 
       try {
         Socket clientSocket = new Socket(serverIp, port);
-        OutputStreamWriter out = new OutputStreamWriter(clientSocket.getOutputStream());
+        DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
 
-        char[] bytes = new char[BUF_SIZE / Character.BYTES]; // 500 chars (2 bytes) in one KByte
-        Arrays.fill(bytes, '0');
+        byte[] bytes = new byte[BUF_SIZE]; // 500 chars (2 bytes) in one KByte
+        // Arrays.fill(bytes, '0');
         long startTime = System.nanoTime();
         long nanosecDuration = (long) (secDuration * Math.pow(10, 9));
         int totalKByte = 0;
 
         while ((System.nanoTime() - startTime) < nanosecDuration) {
-          out.write(bytes, 0, BUF_SIZE / Character.BYTES);
+          out.write(bytes, 0, BUF_SIZE);
           totalKByte++;
         }
         
-        totalKByte = totalKByte / 2; // TODO: figure out why off by factor of two
+        // totalKByte = totalKByte / 2; // TODO: figure out why off by factor of two
         long totalMbit = totalKByte * 8 / 1000;
         long clientDuration = (System.nanoTime() - startTime) / 1000000000;
         double rate = (double) totalMbit / clientDuration;
