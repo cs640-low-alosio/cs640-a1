@@ -38,8 +38,7 @@ public class Iperfer {
     if (args[0].equals("-s")) { // Server Mode
       int port = Integer.parseInt(args[2]);
 
-      try {
-        ServerSocket serverSocket = new ServerSocket(port);
+      try (ServerSocket serverSocket = new ServerSocket(port)) {
         Socket clientSocket = serverSocket.accept();
         DataInputStream in = new DataInputStream(clientSocket.getInputStream());
 
@@ -67,19 +66,17 @@ public class Iperfer {
         // actual output
         System.out
             .println("received=" + totalKByte + " KB rate=" + threePlaces.format(rate) + " Mbps");
-
-        clientSocket.close();
-        serverSocket.close();
       } catch (IOException e) {
         e.printStackTrace();
+      } finally {
+        clientSocket.close();
       }
     } else { // Client Mode
       int port = Integer.parseInt(args[4]);
       String serverIp = args[2];
       int secDuration = Integer.parseInt(args[6]);
 
-      try {
-        Socket clientSocket = new Socket(serverIp, port);
+      try (Socket clientSocket = new Socket(serverIp, port)) {
         DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
 
         byte[] bytes = new byte[BUF_SIZE];
@@ -101,11 +98,7 @@ public class Iperfer {
         System.out.println("client sizeof: " + Character.BYTES * bytes.length + ", totalKByte: " + totalKByte + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", clientDuration: " + clientDuration + ", nsecDur: " + nanosecDuration + ", calculation: " + (long) (secDuration * Math.pow(10, 9)));
         // actual output
         System.out.println("sent=" + totalKByte + " KB rate=" + threePlaces.format(rate) + " Mbps");
-
-        clientSocket.close();
-      } catch (UnknownHostException e) {
-        e.printStackTrace();
-      } catch (IOException e) {
+      } catch (UnknownHostException e | IOException e) {
         e.printStackTrace();
       }
     }
