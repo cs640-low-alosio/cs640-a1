@@ -37,9 +37,10 @@ public class Iperfer {
 
     if (args[0].equals("-s")) { // Server Mode
       int port = Integer.parseInt(args[2]);
-
+      
+      Socket clientSocket = null;
       try (ServerSocket serverSocket = new ServerSocket(port)) {
-        Socket clientSocket = serverSocket.accept();
+        clientSocket = serverSocket.accept();
         DataInputStream in = new DataInputStream(clientSocket.getInputStream());
 
         long startTime = System.nanoTime();
@@ -53,10 +54,9 @@ public class Iperfer {
           totalChar += charReadCount;
         }
         
-        System.out.println("totalChar: " + totalChar);
-        
+        // System.out.println("totalChar: " + totalChar);
         long totalKByte = totalChar / BUF_SIZE;
-        System.out.println("totalKB: " + totalKByte);
+        // System.out.println("totalKB: " + totalKByte);
         long totalMbit = totalKByte * BITS_PER_BYTE / 1000;
         long serverDuration = (System.nanoTime() - startTime) / 1000000000;
         double rate = (double) totalMbit / serverDuration;
@@ -69,7 +69,11 @@ public class Iperfer {
       } catch (IOException e) {
         e.printStackTrace();
       } finally {
-        clientSocket.close();
+        try {
+          clientSocket.close(); 
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
     } else { // Client Mode
       int port = Integer.parseInt(args[4]);
@@ -95,10 +99,10 @@ public class Iperfer {
         double rate = (double) totalMbit / clientDuration;
         
         // debug
-        System.out.println("client sizeof: " + Character.BYTES * bytes.length + ", totalKByte: " + totalKByte + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", clientDuration: " + clientDuration + ", nsecDur: " + nanosecDuration + ", calculation: " + (long) (secDuration * Math.pow(10, 9)));
+        // System.out.println("client sizeof: " + Character.BYTES * bytes.length + ", totalKByte: " + totalKByte + ", starttime: " + startTime + ", rate: " + threePlaces.format(rate) + ", System.nanoTime: " + System.nanoTime() + ", clientDuration: " + clientDuration + ", nsecDur: " + nanosecDuration + ", calculation: " + (long) (secDuration * Math.pow(10, 9)));
         // actual output
         System.out.println("sent=" + totalKByte + " KB rate=" + threePlaces.format(rate) + " Mbps");
-      } catch (UnknownHostException e | IOException e) {
+      } catch (IOException e) {
         e.printStackTrace();
       }
     }
