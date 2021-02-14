@@ -50,12 +50,15 @@ public class Iperfer {
 
         char[] readBuffer = new char[BUF_SIZE / Character.BYTES]; // 500 chars (2 bytes) in one KByte
         // while (in.read() != -1) {
-        while ((charReadCount = in.read(readBuffer)) != -1) {
+        while ((charReadCount = in.read(readBuffer, 0, BUF_SIZE / Character.BYTES)) != -1) {
           System.out.println("charReadCount: " + charReadCount); // debug
           totalChar += charReadCount;
         }
         
+        System.out.println("totalChar: " + totalChar);
+        
         long totalKByte = totalChar / (BUF_SIZE / Character.BYTES); // 500 chars (2 bytes) in one KByte
+        System.out.println("totalKB: " + totalKByte);
         // totalKByte += 1; // figure out why server is off by one; discussed with Abhinay - one less on server is fine
         totalKByte = totalKByte / 2; // TODO: figure out why off by factor of two
         long totalMbit = totalKByte * BITS_PER_BYTE / 1000;
@@ -89,7 +92,7 @@ public class Iperfer {
         int totalKByte = 0;
 
         while ((System.nanoTime() - startTime) < nanosecDuration) {
-          out.write(bytes);
+          out.write(bytes, 0, BUF_SIZE / Character.BYTES);
           totalKByte++;
         }
         
